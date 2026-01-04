@@ -4,11 +4,12 @@ import org.example.imageweb.dao.LabelDao;
 import org.example.imageweb.entity.Label;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+
 
 @Service
 public class LabelService {
-    private LabelDao labelDao;
+    private final LabelDao labelDao;
 
     public LabelService() {
         this.labelDao = new LabelDao();
