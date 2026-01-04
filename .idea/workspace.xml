@@ -4,16 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0d11b70-5e39-43d9-b02a-466d199cd5c8" name="更改" comment="basic function finished">
-      <change afterPath="$PROJECT_DIR$/AIService/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AIService/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/AIController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/MultipartInputStreamFileResource.java" afterDir="false" />
+    <list default="true" id="e0d11b70-5e39-43d9-b02a-466d199cd5c8" name="更改" comment="AI function finished">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/McpController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/McpRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/McpResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/McpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1eb10843-d4aa-4402-9548-514e9377fb98.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1eb10843-d4aa-4402-9548-514e9377fb98.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/backend/init.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/LabelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/LabelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/LabelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/LabelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/dao/ImageDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/dao/ImageDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img1.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img2.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img3.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img3_edited.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img4.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user2/image3.webp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddImageDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddImageDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/images.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/images.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +215,7 @@
       <workItem from="1767240226839" duration="23592000" />
       <workItem from="1767280133243" duration="26321000" />
       <workItem from="1767364228892" duration="2369000" />
-      <workItem from="1767404225652" duration="52824000" />
+      <workItem from="1767404225652" duration="67902000" />
     </task>
     <task id="LOCAL-00001" summary="comit">
       <option name="closed" value="true" />
@@ -238,7 +249,23 @@
       <option name="project" value="LOCAL" />
       <updated>1767489155744</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="AI function finished">
+      <option name="closed" value="true" />
+      <created>1767497245639</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1767497245639</updated>
+    </task>
+    <task id="LOCAL-00006" summary="AI function finished">
+      <option name="closed" value="true" />
+      <created>1767497265299</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1767497265299</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,7 +274,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="comit" />
     <MESSAGE value="basic function finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic function finished" />
+    <MESSAGE value="AI function finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="AI function finished" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -13,6 +13,7 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
+            <name qname="imageweb" />
             <name qname="@" />
             <name qname="pictureweb" />
           </node>

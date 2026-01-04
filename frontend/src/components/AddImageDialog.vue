@@ -23,7 +23,6 @@
           <el-form-item label="图片标题">
             <el-input v-model="imageTitle" placeholder="请输入图片标题" />
           </el-form-item>
-
           <el-form-item label="标签">
             <el-select
               v-model="imageLabels"
@@ -31,14 +30,14 @@
               filterable
               allow-create
               clearable
-              placeholder="请选择或新建标签"
+              placeholder="请选择标签"
             >
               <el-option
                 v-for="label in labels.items"
                 :key="label.id"
                 :label="label.title"
                 :value="label.id"
-              /><el-button type="primary" @click = onAddNewLabel>新建标签</el-button>
+              />
             </el-select>
           </el-form-item>
 
@@ -161,35 +160,6 @@ export default {
         console.error(err);
         ElMessageBox({ title: '错误', message: '上传失败，请稍后重试', showConfirmButton: true });
       }
-    },
-    async onAddNewLabel() {
-      ElMessageBox.prompt('请输入新标签名称', '添加新标签', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /.+/,
-        inputErrorMessage: '标签不能为空'
-      }).then(async ({value}) => {
-        const url = WebsiteConfig + '/label/addToUser';
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            userId: userStore.id,
-            title: value
-          })
-        })
-        if (!response.ok) {
-          const text = await response.text().catch(() => '');
-          ElMessageBox({ title: '错误', message: text || `请求失败：${response.status}`, showConfirmButton: true });
-          return;
-        }
-        else{
-          ElMessage({ message: '添加标签成功', type: 'success', duration: 2000 });
-        }
-        this.$emit('add');
-      }).catch(() => {
-        // 用户取消或关闭消息框，不做处理
-      });
     }
   },
   mounted() {},

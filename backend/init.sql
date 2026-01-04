@@ -38,18 +38,36 @@ CREATE TABLE IF NOT EXISTS labelLinks(
     INDEX idx(p_id,l_id)
 );
 INSERT INTO users (username, email, password) VALUES
-('user1', '111111','pwd111'),
-('user2', '222222','pwd222');
+('用户1', '111111','pwd111'),
+('用户2', '222222','pwd222');
 INSERT INTO images (user_id, title, path) VALUES
-(1, 'Image1', '/sample1.jpg'),
-(1, 'Image2', '/sample2.jpg'),
-(2, 'Image3', '/sample3.jpg');
+(1, '趴着的小狗', '/趴着的小狗.webp'),
+(1, '樱花林中的高塔', '/樱花林中的高塔.webp'),
+(1, '城市高塔', '/城市高塔.webp'),
+(1, '森林别墅', '/森林别墅.webp'),
+(1, '疯狂动物城2', '/疯狂动物城2.webp'),
+(1, '龙猫', '/龙猫.webp'),
+(2, '蓝色鹦鹉', '/蓝色鹦鹉.webp');
 INSERT INTO labels (title, user_id) VALUES
-('Nature', 1),
-('Vacation', 1),
-('Work', 2);
+('自然', 1),
+('风景', 1),
+('建筑', 1),
+('动物', 1),
+('动漫', 1),
+('动物', 2),
+('风景', 2),
+('工作', 2);
 INSERT INTO labelLinks (p_id, l_id) VALUES
-(1, 1),
-(1, 2),
+(1, 4),
 (2, 1),
-(3, 3);
+(2, 2),
+(2, 3),
+(3, 3),
+(4, 1),
+(4, 3),
+(5, 4),
+(5, 5),
+(6, 4),
+(6, 5),
+(7, 5),
+(7, 6);

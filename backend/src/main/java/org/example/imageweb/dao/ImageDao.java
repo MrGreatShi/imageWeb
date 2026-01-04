@@ -2,6 +2,7 @@ package org.example.imageweb.dao;
 
 import org.example.imageweb.config.AppConfig;
 import org.example.imageweb.entity.Image;
+import org.example.imageweb.entity.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -134,5 +135,35 @@ public class ImageDao {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    public List<Image> getPotentialImages(int user_id, List<String> keys) throws SQLException {
+        int size = keys.size();
+        List<Image> allImages = this.getImagesOfUser(user_id);
+        int meetsThreshold = Math.max(1, size / 3);
+        List<Image> potentialImages = new ArrayList<>();
+        for(Image image : allImages) {
+            int meetsCount = 0;
+            for (String key : keys) {
+                if (image.getTitle().contains(key)) {
+                    meetsCount++;
+                }else{
+                    // Check labels
+                    LabelDao labelDao = new LabelDao();
+                    List<Label> labels = labelDao.getLabelsOfImage(image.getId());
+                    for(Label label : labels){
+                        if(label.getTitle().contains(key) || key.contains(label.getTitle())){
+                            meetsCount++;
+                            break;
+                        }
+                    }
+                }
+                if (meetsCount >= meetsThreshold) {
+                    potentialImages.add(image);
+                    break;
+                }
+            }
+        }
+        return potentialImages;
     }
 }

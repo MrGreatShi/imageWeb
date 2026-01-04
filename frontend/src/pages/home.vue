@@ -37,9 +37,28 @@
         </el-form-item>
       </el-col>
     </el-row>
+    <el-row>
+      <el-col :xs="24" :sm="8">
+        <el-form-item label="最早存入时间">
+          <el-date-picker v-model="minStoreDate"></el-date-picker>
+        </el-form-item>
+      </el-col>
+      <el-col :xs="24" :sm="8">
+        <el-form-item label="最迟存入时间">
+          <el-date-picker v-model="maxStoreDate"></el-date-picker>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-button @click="changeSearchType">{{!this.mcpSearch ? '使用mcp搜素' : '取消mcp搜素'}}</el-button>
+    <el-form-item label="mcp测试窗口" v-if="this.mcpSearch">
+      <el-input v-model="conversation" placeholder="请输入想要的图片描述" />
+      <el-button @click="onMcpSearch">搜素</el-button>
+    </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="openAddDialog">添加图片</el-button>
+      <el-button type="primary" @click = openAddDialog>添加图片</el-button>
+      <el-button type="primary" @click = onAddNewLabel>新建标签</el-button>
+      <el-button type="primary" @click = openRemoveLabelDialog>删除标签</el-button>
     </el-form-item>
   </el-form>
 
@@ -88,7 +107,7 @@
                 type="primary"
                 plain
                 :disabled="!manageLabels"
-                @click="showImageDialog = false;  onDeleteLabel(lab)"
+                @click="showImageDialog = false;  onDeleteImageLabel(lab)"
             >{{ typeof lab === 'string' ? lab : (lab.title || String(lab)) }}
             </el-button>
           </div>
@@ -110,6 +129,19 @@
         </div>
       </el-col>
     </el-row>
+  </el-dialog>
+  <el-dialog v-model="showRemoveLabelDialog" width="400px" append-to-body title="删除标签">
+    <el-form-item label="标签">
+      <el-select v-model="removedLabels" multiple clearable placeholder="请选择要删除的标签">
+        <el-option
+            v-for="label in labels.items"
+            :key="label.id"
+            :label="label.title"
+            :value="label.id"
+        />
+      </el-select>
+    </el-form-item>
+    <el-button type="primary" @click="onRemoveLabel">确定</el-button>
   </el-dialog>
 </template>
 
@@ -135,7 +167,14 @@ export default {
       currentImage: {},
       manageLabels: false,
       deleteImages: false,
-      newTitle: ''
+      newTitle: '',
+      conversation: '',
+      mcpSearch:false,
+      potentialImageIds: [],
+      showRemoveLabelDialog: false,
+      removedLabels: [],
+      minStoreDate: null,
+      maxStoreDate: null
     }
   },
   mounted() {
@@ -147,6 +186,21 @@ export default {
     },
     changeManageLabels() {
       this.manageLabels = !this.manageLabels;
+    },
+    changeSearchType(){
+      this.mcpSearch = !this.mcpSearch;
+      if(this.mcpSearch){
+        this.imageUrl = '';
+        this.imageTitle = '';
+        this.selectedLabels = [];
+        this.minStoreDate = null;
+        this.maxStoreDate = null;
+      }else{
+        this.conversation = '';
+      }
+    },
+    openRemoveLabelDialog(){
+      this.showRemoveLabelDialog = true;
     },
     async onAddImageLabels(){
       if(this.newTitle !== '' || this.newLabels.length > 0){
@@ -175,7 +229,59 @@ export default {
         ElMessage({ title: '成功', message: '标签添加成功！', showConfirmButton: true });
       }
     },
-    onDeleteLabel(label){
+    async onAddNewLabel() {
+      ElMessageBox.prompt('请输入新标签名称', '添加新标签', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /.+/,
+        inputErrorMessage: '标签不能为空'
+      }).then(async ({value}) => {
+        const url = WebsiteConfig + '/label/addToUser';
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            userId: userStore.id,
+            title: value
+          })
+        })
+        if (!response.ok) {
+          const text = await response.text().catch(() => '');
+          ElMessageBox({ title: '错误', message: text || `请求失败：${response.status}`, showConfirmButton: true });
+          return;
+        }
+        else{
+          ElMessage({ message: '添加标签成功', type: 'success', duration: 2000 });
+        }
+        this.$emit('add');
+      }).catch(() => {
+        // 用户取消或关闭消息框，不做处理
+      });
+    },
+    async onRemoveLabel(){
+      if(this.removedLabels.length === 0){
+        await ElMessageBox({ title: '错误', message: '请选择要删除的标签', showConfirmButton: true });
+        return;
+      }
+        const url = WebsiteConfig + '/label/removeFromUser';
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(this.removedLabels)
+        })
+        if (!response.ok) {
+          const text = await response.text().catch(() => '');
+          ElMessageBox({ title: '错误', message: text || `请求失败：${response.status}`, showConfirmButton: true });
+          return;
+        }
+        else{
+          ElMessage({ message: '删除标签成功', type: 'success', duration: 2000 });
+          await this.loadAll();
+          this.removedLabels = [];
+          this.showRemoveLabelDialog = false;
+        }
+    },
+    onDeleteImageLabel(label){
       ElMessageBox.confirm(`确认删除标签${label.title}?`,'删除标签', {
         confirmButtonText: '删除',
         cancelButtonText: '取消',
@@ -224,6 +330,29 @@ export default {
           console.log('删除图片失败，请稍后重试: ' + err);
         }
       }).catch(()=>{});
+    },
+    async onMcpSearch(){
+      if(this.conversation.trim() === ''){
+        this.potentialImageIds = [];
+        return;
+      }
+      try{
+        const url = WebsiteConfig + `/mcp/query?user_id=${userStore.id}&conversation=${encodeURIComponent(this.conversation.trim())}`;
+        const response = await fetch(url, {method: 'GET'});
+        if(!response.ok){
+          const text = await response.text().catch(()=>'');
+          console.log(text || `请求失败：${response.status}`);
+          return;
+        }
+
+        const data = await response.json();
+        console.log(data);
+        this.potentialImageIds =[];
+        data.forEach(item => this.potentialImageIds.push(item.image_id));
+        ElMessage({ message: '图片检索完成！', type: 'success' });
+      }catch(err){
+        console.log('图片检索失败，请稍后重试: '+err);
+      }
     },
 
     async loadImages() {
@@ -282,12 +411,22 @@ export default {
       return images.items.slice(0, 3);
     },
     satisfiedImages() {
+      if(this.mcpSearch){
+        return images.items.filter(image => (this.potentialImageIds.length === 0 || this.potentialImageIds.includes(image.id)));
+      }
       return images.items.filter(image => {
         const imgPath = image.path || '';
         const imgTitle = image.title || '';
         if (this.imageUrl !== '' && !imgPath.includes(this.imageUrl)) return false;
         if (this.imageTitle !== '' && !imgTitle.includes(this.imageTitle)) return false;
-
+        if (this.minStoreDate !== null && image.stored_at) {
+          const imgDate = new Date(image.stored_at);
+          if (imgDate < new Date(this.minStoreDate)) return false;
+        }
+        if (this.maxStoreDate !== null && image.stored_at) {
+          const imgDate = new Date(image.stored_at);
+          if (imgDate > new Date(this.maxStoreDate)) return false;
+        }
         if (this.selectedLabels.length === 0) return true;
         const imageLabelTitles = (image.labels || []).map(l =>
             typeof l === 'string' ? l : (l && (l.title || String(l)))

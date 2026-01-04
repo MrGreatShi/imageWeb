@@ -56,9 +56,15 @@ public class LabelController {
     }
 
     @PostMapping("/removeFromUser")
-    public ResponseEntity<?> removeLabelFromUser(@RequestParam int labelId) throws Exception {
+    public ResponseEntity<?> removeLabelFromUser(@RequestBody String labelIds) throws Exception {
         try{
-            labelService.removeLabelFromUser(labelId);
+            int size = labelIds.length();
+            String labelIdStr = labelIds.substring(1,size-1);
+            String[] labelIdList = labelIdStr.split(",");
+            for(String l_id_str : labelIdList){
+                int labelId = Integer.parseInt(l_id_str);
+                labelService.removeLabelFromUser(labelId);
+            }
             return ResponseEntity.ok().build();
         }
         catch(Exception e){

@@ -13,39 +13,6 @@ const defaultState = {
 // 响应式全局用户状态
 export const userStore = reactive({ ...defaultState })
 
-// 从 localStorage 恢复
-function loadUserStore() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return
-    const data = JSON.parse(raw)
-    // 只恢复已知字段，避免注入
-    Object.assign(userStore, {
-      id: Number(data.id || 0),
-      username: data.username || '',
-      email: data.email || '',
-      pathToImage: data.pathToImage || ''
-    })
-  } catch (e) {
-    console.warn('loadUserStore failed', e)
-  }
-}
-
-// 保存到 localStorage（只保存必要字段）
-export function saveUserStore() {
-  try {
-    const snapshot = {
-      id: userStore.id,
-      username: userStore.username,
-      email: userStore.email,
-      pathToImage: userStore.pathToImage
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
-  } catch (e) {
-    console.warn('saveUserStore failed', e)
-  }
-}
-
 // 清空 store 与 localStorage（登出时调用）
 export function clearUserStore() {
   Object.assign(userStore, { ...defaultState })
