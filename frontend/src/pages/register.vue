@@ -25,12 +25,14 @@
 </template>
 
 <script>
-import { userStore } from '../store/user'
+import {userStore, WebsiteConfig} from '../store/user'
+import {ElMessageBox} from "element-plus";
 export default {
   name: 'RegisterPage',
   data() {
     return {
       form: {
+        id: 0,
         username: '',
         password: '',
         email: ''
@@ -39,18 +41,36 @@ export default {
     }
   },
   methods: {
-    handleRegister() {
+    async handleRegister() {
       this.error = '';
       if (!this.form.username || !this.form.password || !this.form.email) {
         this.error = '所有字段都是必填的';
         return;
       }
-      // 保存到全局 store
-      userStore.username = this.form.username
-      userStore.password = this.form.password
-      userStore.email = this.form.email
-      // 这里可以调用后端注册接口，当前仅作示例，注册成功后跳转到首页
-      this.$router.push('/')
+      const url = WebsiteConfig +'/user/register'
+      const response = await fetch(url,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.form.username,
+          password: this.form.password,
+          email: this.form.email
+        })
+      })
+      if (!response.ok) {
+        const text = await response.text().catch(() => '');
+        this.error = text || `请求失败：${response.status}`;
+        return;
+      }
+
+      ElMessageBox({
+        title: '注册成功',
+        message: '欢迎，' + this.form.username + '！请登录。',
+        showConfirmButton: true,
+      });
+      this.$router.push('/login')
     }
   }
 }

@@ -2,15 +2,24 @@
   <el-container style="height:100vh">
     <el-header style="background-color: #409eff; height: 40px;">
       <router-link to="/">首页</router-link> |
-      <router-link to="/login">登录</router-link> |
-      <router-link to="/register">注册</router-link> |
-      <router-link to="/editimage">编辑图片</router-link>
+      <router-link to="/editimage">编辑图片</router-link> |
+      <router-link to="/help">使用手册</router-link>
     </el-header>
 
-    <div class="user-area">
-      <el-avatar :size="36">{{ initial }}</el-avatar>
-      <span class="user-name">{{ userNameDisplay }}</span>
-    </div>
+    <el-popover placement="bottom-end" width="160" trigger="click">
+      <div style="display:flex;flex-direction:column;gap:8px;padding:8px;">
+        <el-button type="primary" v-if="userStore.username === ''" >
+          <router-link to="/login">登录</router-link>
+        </el-button>
+        <el-button type="warning" @click="logout" v-if="userStore.username !== ''">注销</el-button>
+      </div>
+      <template #reference>
+        <div class="user-area">
+          <el-avatar :size="36" class="clickable">{{ avatarInitials}}</el-avatar>
+          <span class="user-name">{{usernameInitials}}</span>
+        </div>
+      </template>
+    </el-popover>
 
     <el-main>
       <router-view></router-view>
@@ -22,14 +31,41 @@
 import { computed } from 'vue'
 import { userStore } from './store/user'
 import router from './router';
+import {ElMessageBox} from "element-plus";
 export default {
   name: 'App',
-  setup() {
-    const userNameDisplay = computed(() => userStore.username || '未登录')
-    const initial = computed(() => {
-      return userStore.username ? userStore.username.charAt(0).toUpperCase() : '未'
-    })
-    return { userNameDisplay, initial }
+  computed: {
+    avatarInitials() {
+      if (userStore.username === '') return '未';
+      return userStore.username.charAt(0).toUpperCase();
+    },
+    usernameInitials() {
+      if (userStore.username === '') return '未登录';
+      return userStore.username;
+    },
+    userStore() {
+      return userStore
+    }
+  },
+  methods: {
+    logout() {
+      ElMessageBox({
+        title: '确认注销',
+        message: '您确定要注销吗？',
+        showCancelButton: true,
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+      }).then(() => {
+        userStore.id = 0;
+        userStore.username = '';
+        userStore.email = '';
+        userStore.pathToImage = '';
+        router.push('/login');
+      }).catch(() => {
+        // 取消操作
+      });
+
+    }
   }
 }
 </script>

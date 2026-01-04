@@ -1,3 +1,4 @@
+// 文件：`frontend/src/pages/login.vue`
 <template>
   <div class="login-card">
     <h2>登录</h2>
@@ -21,30 +22,57 @@
 </template>
 
 <script>
-import { userStore } from '../store/user'
+import {ImageRepositoryHeader, userStore, WebsiteConfig} from '../store/user'
+import {ElMessageBox} from "element-plus";
 export default {
   name: 'LoginPage',
   data() {
     return {
       form: {
+        id: 0,
         username: '',
-        password: ''
+        email: ''
       },
       error: ''
     }
   },
   methods: {
-    handleLogin() {
+    async handleLogin() {
       this.error = '';
       if (!this.form.username || !this.form.password) {
         this.error = '用户名和密码不能为空';
         return;
       }
-      // 保存到全局 store
-      userStore.username = this.form.username
-      userStore.password = this.form.password
-      // 这里可以调用后端登录接口，当前仅作示例，登录成功后跳转到首页
-      this.$router.push('/');
+      try {
+        const url = WebsiteConfig + '/user/login';
+        console.log('Login URL:', url);
+        const resp = await fetch(url + `?username=${this.form.username}&password=${this.form.password}` , {
+          method: 'GET'
+        });
+
+        if (!resp.ok) {
+          const text = await resp.text().catch(() => '');
+          this.error = text || `请求失败：${resp.status}`;
+          return;
+        }
+
+        const data = await resp.json();
+
+        ElMessageBox({
+          title: '登录成功',
+          message: '欢迎回来，' + data.username + '！',
+          showConfirmButton: true,
+        });
+
+        userStore.id = data.id;
+        userStore.username = data.username;
+        userStore.email = data.email;
+        userStore.pathToImage = ImageRepositoryHeader + data.username;
+
+        await this.$router.push('/');
+      } catch (err) {
+        this.error = '登录失败，请稍后重试';
+      }
     }
   }
 }

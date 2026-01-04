@@ -5,10 +5,12 @@
       fit="contain"
       :preview-src-list="[src]"
       class="thumb"
-      :style="{ height: imageHeight }
-      "
+      :style="{ height: imageHeight }"
     ></el-image>
-    <div class="title">{{ title }}</div>
+    <el-row>
+      <div class="title">{{title}}</div>
+      <el-button size="mini" type="danger" @click.stop="$emit('delete')">删除</el-button>
+    </el-row>
   </div>
 </template>
 
@@ -16,9 +18,15 @@
 export default {
   name: 'ImageCard',
   props: {
+    itemKey: { type: [Number, String], required: false },
     src: { type: String, required: true },
     title: { type: String, default: '' },
     height: { type: [Number, String], default: 180 }
+  },
+  methods: {
+    async onclickdel(key) {
+      this.$emit('delete', key);
+    }
   },
   computed: {
     imageHeight() {
@@ -40,12 +48,12 @@ export default {
 }
 .thumb {
   width: 100%;
-  /* 使用 CSS 变量接收行内高度，便于在组件 props 中控制 */
-  height: var(--image-height, 180px);
+  height: 180px;
   background: #f7f7f7;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 }
 .thumb ::v-deep(.el-image__img) {
   /* 保持纵横比并居中显示在容器中 */

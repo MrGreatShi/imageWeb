@@ -3,8 +3,8 @@
     <el-row :gutter="16">
       <el-col :span="12">
         <div class="uploader">
-          <div class="preview" v-if="src">
-            <img :src="src" alt="preview" />
+          <div class="preview" v-if="this.srcFile">
+            <img :src="this.srcFile" alt="preview" />
           </div>
           <div class="preview placeholder" v-else>
             <div>请选择图片或拖拽到此处</div>
@@ -13,20 +13,20 @@
           <div class="actions">
             <input ref="fileInput" type="file" accept="image/*" class="hidden-file" @change="onFileChange" />
             <el-button @click="chooseFile">选择图片</el-button>
-            <el-button type="danger" @click="clear" :disabled="!src">清除</el-button>
+            <el-button type="danger" @click="clear" :disabled="!this.srcFile">清除</el-button>
           </div>
         </div>
       </el-col>
 
       <el-col :span="12">
-        <el-form label-position="top" :model="form">
+        <el-form label-position="top" >
           <el-form-item label="图片标题">
-            <el-input v-model="form.title" placeholder="请输入图片标题" />
+            <el-input v-model="imageTitle" placeholder="请输入图片标题" />
           </el-form-item>
 
           <el-form-item label="标签">
             <el-select
-              v-model="form.labels"
+              v-model="imageLabels"
               multiple
               filterable
               allow-create
@@ -34,11 +34,11 @@
               placeholder="请选择或新建标签"
             >
               <el-option
-                v-for="label in labelStore.labels"
-                :key="label"
-                :label="label"
-                :value="label"
-              />
+                v-for="label in labels.items"
+                :key="label.id"
+                :label="label.title"
+                :value="label.id"
+              /><el-button type="primary" @click = onAddNewLabel>新建标签</el-button>
             </el-select>
           </el-form-item>
 
@@ -49,7 +49,7 @@
 
           <div class="footer-actions">
             <el-button @click="onCancel">取消</el-button>
-            <el-button type="primary" @click="onConfirm" :disabled="!src">确定</el-button>
+            <el-button type="primary" @click="onConfirm" :disabled="!this.srcFile">确定</el-button>
           </div>
         </el-form>
       </el-col>
@@ -58,78 +58,115 @@
 </template>
 
 <script>
-import { ref, reactive, onUnmounted } from 'vue'
-import { labelStore } from '../store/label'
+import { onUnmounted } from 'vue';
+import { userStore, WebsiteConfig } from "../store/user.js";
+import { labels } from "../store/label";
+import { ElMessageBox, ElMessage } from "element-plus";
 
 export default {
   name: 'AddImageDialog',
-  setup(_, { emit }) {
-    const fileInput = ref(null)
-    const src = ref('')
-    const fileObj = ref(null)
-
-    const form = reactive({ title: '', labels: [] })
-
-    function chooseFile() {
-      fileInput.value && fileInput.value.click()
+  computed: {
+    labels() { return labels; }
+  },
+  data() {
+    return {
+      imageTitle: '',
+      imageLabels: [],
+      srcFile: '',
+      selectedFile: null,
     }
-
-    function onFileChange(e) {
-      const f = e.target.files && e.target.files[0]
-      if (!f) return
-      if (fileObj.value && fileObj.value !== f) {
-        // 释放旧 URL
-        releaseObjectURL()
+  },
+  methods: {
+    chooseFile() { this.$refs.fileInput.click(); },
+    onFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.selectedFile = file;
+        this.srcFile = URL.createObjectURL(file);
       }
-      fileObj.value = f
-      src.value = URL.createObjectURL(f)
-    }
+    },
+    clear() {
+      this.imageTitle = null;
+      this.imageLabels = [];
+      this.srcFile = null;
+      this.selectedFile = null;
+      if (this.$refs.fileInput) this.$refs.fileInput.value = '';
+    },
+    onAiGenerate() {
+      this.$message.info('AI 生成标签功能尚未实现');
+    },
+    onCancel() { this.$emit('close'); },
+    async onConfirm() {
+      if (!this.imageTitle || !this.selectedFile) {
+        ElMessageBox({ title: '错误', message: '请填写图片标题并选择图片', showConfirmButton: true });
+        return;
+      }
 
-    function clear() {
-      if (fileInput.value) fileInput.value.value = ''
-      fileObj.value = null
-      releaseObjectURL()
-      src.value = ''
-      form.title = ''
-      form.labels = []
-    }
-
-    function onAiGenerate() {
-      // 仅界面按钮，实际 AI 功能未实现
-      // 可在此打开提示或调用后端/AI 服务
-      window.alert('AI 生成标签功能未实现（仅界面）')
-    }
-
-    function onConfirm() {
-      if (!src.value) return
-
-      // 将新标签加入 labelStore（如果 labelStore 为可变数组）
       try {
-        form.labels.forEach(l => {
-          if (!labelStore.labels.includes(l)) labelStore.labels.push(l)
+        const url = WebsiteConfig + '/image/store';
+        const form = new FormData();
+        form.append('file', this.selectedFile);
+        form.append('user_id', userStore.id);
+        form.append('title', this.imageTitle);
+        // 传标签为 JSON 字符串，后端兼容解析
+        form.append('labels', JSON.stringify(this.imageLabels));
+        const resp = await fetch(url, {
+          method: 'POST',
+          body: form
+        });
+
+        if (!resp.ok) {
+          const text = await resp.text().catch(()=> '');
+          ElMessageBox({ title: '错误', message: text || `请求失败：${resp.status}`, showConfirmButton: true });
+          return;
+        }
+
+        ElMessageBox({ title: '成功', message: '图片添加成功！', showConfirmButton: true });
+        this.$emit('add');
+        this.$emit('close');
+        this.imageTitle = null;
+        this.imageLabels = [];
+        this.srcFile = null;
+        this.selectedFile = null;
+
+      } catch (err) {
+        console.error(err);
+        ElMessageBox({ title: '错误', message: '上传失败，请稍后重试', showConfirmButton: true });
+      }
+    },
+    async onAddNewLabel() {
+      ElMessageBox.prompt('请输入新标签名称', '添加新标签', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /.+/,
+        inputErrorMessage: '标签不能为空'
+      }).then(async ({value}) => {
+        const url = WebsiteConfig + '/label/addToUser';
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            userId: userStore.id,
+            title: value
+          })
         })
-      } catch (e) {
-        // 忽略 store 更新错误
-      }
-
-      emit('add', { src: src.value, title: form.title, labels: [...form.labels] })
+        if (!response.ok) {
+          const text = await response.text().catch(() => '');
+          ElMessageBox({ title: '错误', message: text || `请求失败：${response.status}`, showConfirmButton: true });
+          return;
+        }
+        else{
+          ElMessage({ message: '添加标签成功', type: 'success', duration: 2000 });
+        }
+        this.$emit('add');
+      }).catch(() => {
+        // 用户取消或关闭消息框，不做处理
+      });
     }
-
-    function onCancel() {
-      emit('close')
-    }
-
-    function releaseObjectURL() {
-      try {
-        if (src.value && src.value.startsWith('blob:')) URL.revokeObjectURL(src.value)
-      } catch (e) {}
-    }
-
-    onUnmounted(() => {
-      releaseObjectURL()
-    })
-
-    return { fileInput, chooseFile, onFileChange, src, form, clear, onAiGenerate, onConfirm, onCancel, labelStore }
+  },
+  mounted() {},
+  unmounted() {
+    if (this.srcFile) URL.revokeObjectURL(this.srcFile);
   }
 }
 </script>

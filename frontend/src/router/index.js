@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: ()=> import('../pages/home.vue')
   },
   {
     path: '/login',
@@ -17,11 +17,15 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: () => import('../pages/register.vue')
   },{
     path: '/editimage',
     name: 'EditImage',
     component: () => import('../pages/editImage.vue')
+  },{
+    path:'/help',
+    name:'Help',
+    component: () => import('../help/help.md')
   }
 ]
 
