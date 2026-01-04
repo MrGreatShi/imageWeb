@@ -4,60 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0d11b70-5e39-43d9-b02a-466d199cd5c8" name="更改" comment="comit">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/init_sql.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/ImageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/LabelController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/dao/ImageDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/dao/LabelDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/dao/UserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/EditInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/Image.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/ImageExif.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/Label.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/ImageService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/LabelService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/org/example/imageweb/DaoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/org/example/imageweb/DatabaseConnectionTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/help/help.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imageWeb.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="e0d11b70-5e39-43d9-b02a-466d199cd5c8" name="更改" comment="basic function finished">
+      <change afterPath="$PROJECT_DIR$/AIService/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AIService/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/AIController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/MultipartInputStreamFileResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/backend/init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/ImageWebApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/ImageWebApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic1.jfif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic10.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic3.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic5.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic6.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic7.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic8.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/public/pictures/pic9.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/LabelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/LabelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/LabelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/LabelService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddImageDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddImageDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ImageCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ImageCard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/editImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/editImage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/label.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/label.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/pictures.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/images.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/store/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store/images.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/images.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +204,7 @@
       <workItem from="1767240226839" duration="23592000" />
       <workItem from="1767280133243" duration="26321000" />
       <workItem from="1767364228892" duration="2369000" />
-      <workItem from="1767404225652" duration="44504000" />
+      <workItem from="1767404225652" duration="52824000" />
     </task>
     <task id="LOCAL-00001" summary="comit">
       <option name="closed" value="true" />
@@ -258,7 +214,31 @@
       <option name="project" value="LOCAL" />
       <updated>1767239862719</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="basic function finished">
+      <option name="closed" value="true" />
+      <created>1767489022679</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1767489022679</updated>
+    </task>
+    <task id="LOCAL-00003" summary="basic function finished">
+      <option name="closed" value="true" />
+      <created>1767489100470</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1767489100470</updated>
+    </task>
+    <task id="LOCAL-00004" summary="basic function finished">
+      <option name="closed" value="true" />
+      <created>1767489155744</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1767489155744</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,7 +246,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="comit" />
-    <option name="LAST_COMMIT_MESSAGE" value="comit" />
+    <MESSAGE value="basic function finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="basic function finished" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

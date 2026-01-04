@@ -44,7 +44,6 @@
 
           <el-form-item>
             <el-button type="primary" @click="onAiGenerate">AI 生成标签</el-button>
-            <span class="hint">（仅界面，未实现）</span>
           </el-form-item>
 
           <div class="footer-actions">
@@ -74,6 +73,7 @@ export default {
       imageLabels: [],
       srcFile: '',
       selectedFile: null,
+      suggestions: [],
     }
   },
   methods: {
@@ -92,8 +92,36 @@ export default {
       this.selectedFile = null;
       if (this.$refs.fileInput) this.$refs.fileInput.value = '';
     },
-    onAiGenerate() {
-      this.$message.info('AI 生成标签功能尚未实现');
+    suggetedLabels(ids) {
+      if (!Array.isArray(ids)) return [];
+      return labels.items.filter(label => ids.includes(label.id)).map(label => label.id);
+    },
+    async onAiGenerate() {
+      if (!this.selectedFile) {
+        this.$message.warning('请先选择图片再使用 AI 生成标签');
+        return;
+      }
+      const url = WebsiteConfig + '/ai/suggestLabels';
+      const form = new FormData();
+      form.append('file', this.selectedFile);
+      form.append('user_id', userStore.id);
+      try {
+        const loading = ElMessage({ message: '正在识别标签…', type: 'info', duration: 0 });
+        const resp = await fetch(url, { method: 'POST', body: form });
+        loading.close && loading.close();
+        if (!resp.ok) {
+          const txt = await resp.text().catch(()=>'');
+          ElMessageBox({ title: '错误', message: txt || `请求失败：${resp.status}`, showConfirmButton: true });
+          return;
+        }
+        const data = await resp.json();
+        console.log(data);
+        this.imageLabels = this.suggetedLabels(data);
+        ElMessage({ message: 'AI 已为你匹配标签', type: 'success', duration: 2000 });
+      } catch (err) {
+        console.error(err);
+        ElMessage({ message: 'AI 标签生成失败，请稍后重试', type: 'error' });
+      }
     },
     onCancel() { this.$emit('close'); },
     async onConfirm() {

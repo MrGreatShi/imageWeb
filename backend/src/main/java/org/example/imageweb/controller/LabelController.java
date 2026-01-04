@@ -1,15 +1,13 @@
 package org.example.imageweb.controller;
 
-
-import org.example.imageweb.entity.Image;
-import org.example.imageweb.entity.Label;
 import org.example.imageweb.service.ImageService;
 import org.example.imageweb.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/label" )
@@ -105,4 +103,5 @@ public class LabelController {
             return ResponseEntity.status(500).body("Error removeing label to image: " + e.getMessage());
         }
     }
+
 }
