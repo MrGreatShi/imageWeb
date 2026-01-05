@@ -17,8 +17,8 @@ public class UserService {
         this.userDao = new UserDao();
     }
 
-    public User getInfo(String username) throws Exception{
-        return userDao.getUserByUsername(username);
+    public User getInfo(int id) throws Exception{
+        return userDao.getUserByID(id);
     }
 
     public void register(String username, String password, String email) throws Exception {

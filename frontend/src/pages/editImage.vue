@@ -54,7 +54,6 @@
             <div class="control-row">
               <div>保存方式</div>
               <el-button @click="onChangeSaveMethod">{{IsReplace ? '覆盖原文件' : '新建文件'}}</el-button>
-              <input type="file" ref="fileInput" @change="onFileChange" style="display: none;" />
             </div>
             <div class="spacer" />
 
@@ -101,7 +100,8 @@
 <script>
 import {images} from "../store/images.js";
 import {labels} from "../store/label.js";
-import {userStore, WebsiteConfig} from "../store/user.js";
+import {userStore, WebsiteConfig, ImageRepositoryHeader} from "../store/user.js";
+import {ElMessage} from "element-plus";
 
 export default {
   name: 'EditImagePage',
@@ -125,8 +125,18 @@ export default {
       IsReplace: false
     }
   },
-  mounted() {
-    this.loadAll();
+  async mounted() {
+    const url = WebsiteConfig + '/user/verify';
+    const response = await fetch(url , {method: 'Post'});
+    if (!response.ok) {
+      userStore.clear();
+    }
+    const data = await response.json();
+    userStore.id = data.id;
+    userStore.username = data.username;
+    userStore.email = data.email;
+    userStore.pathToImage = ImageRepositoryHeader + data.username;
+    await this.loadAll();
     window.addEventListener('mousemove', this.onPointerMove);
     window.addEventListener('mouseup', this.onPointerUp);
   },
@@ -302,8 +312,6 @@ export default {
       this.previewStyle = {};
       this.initCropBox();
     },
-    // javascript
-// 替换文件：`frontend/src/pages/editImage.vue` 中 methods 的 onSave
     async onSave() {
       const img = this.$refs.previewImage;
       if (!img || !img.complete || img.naturalWidth === 0) {
@@ -368,7 +376,13 @@ export default {
           body: JSON.stringify(payload)
         });
         if (resp.ok) {
+          ElMessage({message:'保存成功', type: 'success' });
           await this.loadAll();
+          this.currentImage = images.items[0];
+          this.hue = 0;
+          this.brightness = 100;
+          this.contrast = 100;
+          this.applyFilter();
           this.$message.success('修改成功');
         } else {
           const txt = await resp.text().catch(()=> '');
@@ -408,7 +422,6 @@ export default {
         console.log('获取图片失败，请稍后重试: '+err);
       }
     },
-
     async loadLabels() {
       try{
         const url = WebsiteConfig + `/label/getLabelsOfUser?user_id=${userStore.id}`;
@@ -425,22 +438,8 @@ export default {
         console.log('获取标签失败，请稍后重试');
       }
     },
-
     async loadAll() {
       await Promise.all([this.loadImages(), this.loadLabels()]);
-    },
-
-    onFileChange(e) {
-      const f = e.target.files && e.target.files[0];
-      if (!f) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        if (this.currentImage) {
-          this.currentImage.path = ev.target.result;
-          this.$nextTick(() => this.initCropBox());
-        }
-      };
-      reader.readAsDataURL(f);
     }
   },
   computed:{

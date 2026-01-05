@@ -22,10 +22,6 @@ const routes = [
     path: '/editimage',
     name: 'EditImage',
     component: () => import('../pages/editImage.vue')
-  },{
-    path:'/help',
-    name:'Help',
-    component: () => import('../help/help.md')
   }
 ]
 

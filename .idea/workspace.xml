@@ -4,26 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0d11b70-5e39-43d9-b02a-466d199cd5c8" name="更改" comment="AI function finished">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/McpController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/McpRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/entity/McpResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/McpService.java" afterDir="false" />
+    <list default="true" id="e0d11b70-5e39-43d9-b02a-466d199cd5c8" name="更改" comment="mcp interface finished">
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/1eb10843-d4aa-4402-9548-514e9377fb98.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1eb10843-d4aa-4402-9548-514e9377fb98.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/backend/init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/LabelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/LabelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/dao/ImageDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/dao/ImageDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img1.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img2.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img3.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img3_edited.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user1/img4.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/imageRepository/user2/image3.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddImageDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddImageDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/AIService/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/imageweb/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/help/help.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/editImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/editImage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/store/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +34,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -51,6 +51,10 @@
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -73,12 +77,16 @@
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.ImageWebApplication.executor&quot;: &quot;Run&quot;,
     &quot;database.data.extractors.current.export.id&quot;: &quot;Comma-separated (CSV)_id&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/VSCODE/BS/imageWeb&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -88,7 +96,7 @@
     &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pathVariables&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\DevelopSoftware\\IntelliJ IDEA 2024.3.5\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
     &quot;数据库脚本.init.sql.executor&quot;: &quot;Run&quot;
@@ -104,6 +112,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\VSCODE\BS\imageWeb" />
       <recent name="D:\VSCODE\BS\imageWeb\frontend\src\help" />
       <recent name="D:\VSCODE\BS\imageWeb\backend\src\main\java\org\example\imageweb\entity" />
     </key>
@@ -202,6 +211,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
       <changelist id="e0d11b70-5e39-43d9-b02a-466d199cd5c8" name="更改" comment="" />
@@ -215,7 +232,12 @@
       <workItem from="1767240226839" duration="23592000" />
       <workItem from="1767280133243" duration="26321000" />
       <workItem from="1767364228892" duration="2369000" />
-      <workItem from="1767404225652" duration="67902000" />
+      <workItem from="1767404225652" duration="77579000" />
+      <workItem from="1767575767250" duration="302000" />
+      <workItem from="1767576266747" duration="437000" />
+      <workItem from="1767576840120" duration="114000" />
+      <workItem from="1767577084091" duration="4034000" />
+      <workItem from="1767595499316" duration="611000" />
     </task>
     <task id="LOCAL-00001" summary="comit">
       <option name="closed" value="true" />
@@ -265,7 +287,23 @@
       <option name="project" value="LOCAL" />
       <updated>1767497265299</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="mcp interface finished">
+      <option name="closed" value="true" />
+      <created>1767521582061</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1767521582061</updated>
+    </task>
+    <task id="LOCAL-00008" summary="mcp interface finished">
+      <option name="closed" value="true" />
+      <created>1767521597599</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1767521597599</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -275,7 +313,8 @@
     <MESSAGE value="comit" />
     <MESSAGE value="basic function finished" />
     <MESSAGE value="AI function finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="AI function finished" />
+    <MESSAGE value="mcp interface finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="mcp interface finished" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -286,5 +325,13 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

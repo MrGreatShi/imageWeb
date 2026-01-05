@@ -1,83 +1,95 @@
 <template>
-  <div class="carousel-wrapper">
-    <el-carousel height="330px" indicator-position="outside" arrow="always" :autoplay="true" :interval="3200">
-      <el-carousel-item v-for="(img, idx) in carouselImages" :key="idx">
-        <div class="carousel-image-box">
-          <img :src="img.path" :alt="img.title" class="carousel-image" />
-          <div class="carousel-title">{{ img.title }}</div>
-        </div>
-      </el-carousel-item>
-    </el-carousel>
-  </div>
+  <el-container v-if="userStore.id === 0" style="margin-top: 100px; text-align: center;">
+    <el-header>
+      <h2>欢迎使用图片管理系统</h2>
+    </el-header>
+    <el-main>
+      <p>请先登录以使用全部功能</p>
+    </el-main>
+    <router-link to="/login">点击此处登录</router-link>
+  </el-container>
+  <div v-else>
+    <div  class="carousel-wrapper">
+      <el-carousel height="330px" indicator-position="outside" arrow="always" :autoplay="true" :interval="3200">
+        <el-carousel-item v-for="(img, idx) in carouselImages" :key="idx">
+          <div class="carousel-image-box">
+            <img :src="img.path" :alt="img.title" class="carousel-image" />
+            <div class="carousel-title">{{ img.title }}</div>
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
 
-  <el-form>
-    <el-row :gutter="12">
-      <el-col :xs="24" :sm="8">
-        <el-form-item label="图片地址">
-          <el-input v-model="imageUrl" placeholder="请输入图片地址" />
-        </el-form-item>
-      </el-col>
+    <el-form>
+      <el-row :gutter="12">
+        <el-col :xs="24" :sm="8">
+          <el-form-item label="图片地址">
+            <el-input v-model="imageUrl" placeholder="请输入图片地址" />
+          </el-form-item>
+        </el-col>
 
-      <el-col :xs="24" :sm="8">
-        <el-form-item label="图片标题">
-          <el-input v-model="imageTitle" placeholder="请输入图片标题" />
-        </el-form-item>
-      </el-col>
+        <el-col :xs="24" :sm="8">
+          <el-form-item label="图片标题">
+            <el-input v-model="imageTitle" placeholder="请输入图片标题" />
+          </el-form-item>
+        </el-col>
 
-      <el-col :xs="24" :sm="8">
-        <el-form-item label="标签">
-          <el-select v-model="selectedLabels" multiple clearable placeholder="请选择标签">
-            <el-option
-                v-for="label in labels.items"
-                :key="label.id"
-                :label="label.title"
-                :value="label.title"
-            />
-          </el-select>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :xs="24" :sm="8">
-        <el-form-item label="最早存入时间">
-          <el-date-picker v-model="minStoreDate"></el-date-picker>
-        </el-form-item>
-      </el-col>
-      <el-col :xs="24" :sm="8">
-        <el-form-item label="最迟存入时间">
-          <el-date-picker v-model="maxStoreDate"></el-date-picker>
-        </el-form-item>
-      </el-col>
-    </el-row>
-    <el-button @click="changeSearchType">{{!this.mcpSearch ? '使用mcp搜素' : '取消mcp搜素'}}</el-button>
-    <el-form-item label="mcp测试窗口" v-if="this.mcpSearch">
-      <el-input v-model="conversation" placeholder="请输入想要的图片描述" />
-      <el-button @click="onMcpSearch">搜素</el-button>
-    </el-form-item>
+        <el-col :xs="24" :sm="8">
+          <el-form-item label="标签">
+            <el-select v-model="selectedLabels" multiple clearable placeholder="请选择标签">
+              <el-option
+                  v-for="label in labels.items"
+                  :key="label.id"
+                  :label="label.title"
+                  :value="label.title"
+              />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :xs="24" :sm="8">
+          <el-form-item label="最早存入时间">
+            <el-date-picker v-model="minStoreDate"></el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="8">
+          <el-form-item label="最迟存入时间">
+            <el-date-picker v-model="maxStoreDate"></el-date-picker>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-button @click="changeSearchType">{{!this.mcpSearch ? '使用mcp搜素' : '取消mcp搜素'}}</el-button>
+      <el-form-item label="mcp测试窗口" v-if="this.mcpSearch">
+        <el-input v-model="conversation" placeholder="请输入想要的图片描述" />
+        <el-button @click="onMcpSearch">搜素</el-button>
+      </el-form-item>
 
-    <el-form-item>
-      <el-button type="primary" @click = openAddDialog>添加图片</el-button>
-      <el-button type="primary" @click = onAddNewLabel>新建标签</el-button>
-      <el-button type="primary" @click = openRemoveLabelDialog>删除标签</el-button>
-    </el-form-item>
-  </el-form>
+      <el-form-item>
+        <el-button type="primary" @click = openAddDialog>添加图片</el-button>
+        <el-button type="primary" @click = onAddNewLabel>新建标签</el-button>
+        <el-button type="primary" @click = openRemoveLabelDialog>删除标签</el-button>
+      </el-form-item>
+    </el-form>
 
-  <div class="home-page">
-    <h2>我的图片</h2>
-    <div class="gallery">
-      <ImageCard
-        v-for="image in satisfiedImages"
-        :key="image.id"
-        :item-key="image.id"
-        :src="image.path"
-        :title="image.title"
-        :labels="image.labels"
-        height="140"
-        @delete ="onDeleteImage(image)"
-        @click = "showImageDialog = true; currentImage = image"
-      />
+    <div class="home-page">
+      <h2>我的图片</h2>
+      <div class="gallery">
+        <ImageCard
+            v-for="image in satisfiedImages"
+            :key="image.id"
+            :item-key="image.id"
+            :src="image.path"
+            :title="image.title"
+            :labels="image.labels"
+            height="140"
+            @delete ="onDeleteImage(image)"
+            @click = "showImageDialog = true; currentImage = image"
+        />
+      </div>
     </div>
   </div>
+
 
   <el-dialog v-model="showAddDialog" width="720px" append-to-body>
     <AddImageDialog @add="loadAll" @close="showAddDialog = false;" />
@@ -146,7 +158,7 @@
 </template>
 
 <script>
-import {userStore, WebsiteConfig} from '../store/user'
+import {ImageRepositoryHeader, userStore, WebsiteConfig} from '../store/user'
 import {images} from "../store/images.js";
 import {labels} from "../store/label.js";
 import ImageCard from '../components/ImageCard.vue'
@@ -177,8 +189,18 @@ export default {
       maxStoreDate: null
     }
   },
-  mounted() {
-    this.loadAll();
+  async mounted() {
+    const url = WebsiteConfig + '/user/verify';
+    const response = await fetch(url , {method: 'Post'});
+    if (!response.ok) {
+      userStore.clear();
+    }
+    const data = await response.json();
+    userStore.id = data.id;
+    userStore.username = data.username;
+    userStore.email = data.email;
+    userStore.pathToImage = ImageRepositoryHeader + data.username;
+    await this.loadAll();
   },
   methods:{
     openAddDialog() {
@@ -226,7 +248,8 @@ export default {
         this.showImageDialog = false;
         this.manageLabels = false;
         this.newLabels = [];
-        ElMessage({ title: '成功', message: '标签添加成功！', showConfirmButton: true });
+        this.newTitle ='';
+        ElMessage({ title: '成功', message: '信息修改成功！', type: 'success' });
       }
     },
     async onAddNewLabel() {
@@ -251,6 +274,7 @@ export default {
           return;
         }
         else{
+          await this.loadAll();
           ElMessage({ message: '添加标签成功', type: 'success', duration: 2000 });
         }
         this.$emit('add');
@@ -297,7 +321,7 @@ export default {
             return;
           }
           ElMessageBox(
-              { title: '成功', message: '标签删除成功！', showConfirmButton: true }
+              { title: '成功', message: '标签删除成功！', type: 'success' },
           );
           this.showImageDialog = false;
           this.manageLabels = false;
@@ -323,7 +347,7 @@ export default {
             return;
           }
           ElMessageBox(
-              { title: '删除成功', message: '图片删除成功！', showConfirmButton: true }
+              { title: '删除成功', message: '图片删除成功！', type: 'success' },
           );
           await this.loadImages();
         } catch (err) {
@@ -404,6 +428,9 @@ export default {
     }
   },
   computed: {
+    userStore() {
+      return userStore
+    },
     labels() {
       return labels
     },

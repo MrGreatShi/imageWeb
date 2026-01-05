@@ -1,0 +1,32 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db   # 等待db（mysql）服务
+  aiservice:
+    build: ./AIService
+    ports:
+      - "5000:5000"
+    volumes:
+    - C:/Users/21984/.cache/huggingface:/root/.cache/huggingface
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Mysql19491001
+      MYSQL_DATABASE: imageWeb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Mysql19491001
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql     # 持久化数据（可选）
+
+    #docker-compose up --build

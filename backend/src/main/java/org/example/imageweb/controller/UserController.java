@@ -18,7 +18,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private int user_id;
+
     private final ObjectMapper mapper = new ObjectMapper();
+
+    public UserController() {
+        user_id = 0;
+    }
 
     @GetMapping("/login")
     public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) throws Exception {
@@ -27,6 +33,7 @@ public class UserController {
             User user = userService.login(username, password);
             if (user != null) {
                 System.out.println("login success: " + user.getUsername());
+                user_id = user.getId();
                 return ResponseEntity.ok(user);
             }else {
                 System.out.println("login fail: " + username);
@@ -60,11 +67,12 @@ public class UserController {
         }
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody int id) throws Exception {
+    @PostMapping("/verify")
+    public ResponseEntity<?> confirmLoginState() throws Exception {
         try{
-            userService.Logout(id);
-            return ResponseEntity.ok().build();
+            User user = userService.getInfo(user_id);
+            System.out.println("verify user: " + user.getUsername());
+            return ResponseEntity.ok(user);
         }
         catch(Exception e){
             return ResponseEntity.status(500).body(e.getMessage());

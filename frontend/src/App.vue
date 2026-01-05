@@ -1,9 +1,8 @@
 <template>
   <el-container style="height:100vh">
-    <el-header style="background-color: #409eff; height: 40px;">
+    <el-header style="background-color: #409eff; height: 40px;"> |
       <router-link to="/">首页</router-link> |
       <router-link to="/editimage">编辑图片</router-link> |
-      <router-link to="/help">使用手册</router-link>
     </el-header>
 
     <el-popover placement="bottom-end" width="160" trigger="click">
